@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+	<style>
+		body {background-color: rgb({{ mainTemp}}) }
+		h1   {color:white}
+		p    {color:green}
+	</style>
+<title>Hello from Flask</title>
+</head>
+  <body>
+    <h1>Search </h1>
+    <form action="/search" method="POST" name="search">
+        <p>
+            Please enter query: <br />
+            <input type="text" name="zip" />
+        </p>
+        <p><input type="submit" value="Search"></p>
+    </form>
+    <h3>The Temp is {{ temp }}</h3>
+<br>
+{% block content %}{% endblock %}
+
+  </body>
+</html>
