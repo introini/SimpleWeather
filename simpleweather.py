@@ -33,7 +33,7 @@ def getHex(mainTemp):
     return colors[mainTemp]
 
 @app.route('/')
-def home():
+def simpleweather():
     return render_template('weather.html')
 
 @app.route('/search', methods=['POST','GET'])
@@ -50,5 +50,5 @@ def search():
 
 
 if __name__ == '__main__':
-    app.debug = True
+    app.debug = False
     app.run()
