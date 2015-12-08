@@ -2,24 +2,30 @@
 <html>
 <head>
 	<style>
-		body {background-color: rgb({{ mainTemp}}); font-family: Helvetica; text-align: center; }
-		h1   {color:Black}
-		p    {color:Black}
+		body {background-color: rgb({{ mainTemp}}); font-family: Helvetica; text-align: center; margin: 0px; padding: 0px;}
+        nav  {background-color: #333; margin: 0; overflow: hidden;}
+        nav ul {margin: 0; padding: 0;}
+        nav ul li {display: inline-block; list-style-type: none; line-height: 2em; padding: 0.5em 0.5em;}
+        nav > ul > li > a {color: #aaa; background-color:#FF0; display: block; line-height: 2em; padding: 0.5em 0.5em; text-decoration: none;}
+		h1   {color:white; text-align: left; margin: 10px; float: left;}
+        h3   {text-align: left; padding: 15px}
+        p    {color:#aaa}
+        label {color:#FEF; padding-right: 5px;}
 	</style>
 <title>Hello from Flask</title>
 </head>
   <body>
-    <h1>Mike's Simple Weather Search</h1>
-    <form action="/search" method="POST" name="search">
-        <p>
-            Enter your Zip Code: <br />
-            <input type="text" name="zip" />
-        </p>
-        <p><input type="submit" value="Search"></p>
-    </form>
-    <h3>The Temp is {{ temp }}</h3>
+  <nav>
+      <h1>SimpleWeather</h1>
+      <form action="/search" method="POST" name="search">
+          <ul>
+            <li><label>Enter your Zip Code:</label><input type="text" name="zip" /></li>
+            <li><input type="submit" value="Search"></li>
+          </ul>
+      </form>
+  </nav>
+    <h3>The Temp is: {{ temp }}</h3>
 <br>
 {% block content %}{% endblock %}
-
   </body>
 </html>
