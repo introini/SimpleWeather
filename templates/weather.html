@@ -8,25 +8,25 @@
         nav ul li {display: inline-block; list-style-type: none; line-height: 2em; padding: 0.5em 0.5em;}
         nav > ul > li > a {color: #aaa; background-color:#FF0; display: block; line-height: 2em; padding: 0.5em 0.5em; text-decoration: none;}
 		h1   {color:white; text-align: left; margin: 10px; float: left;}
-        h3   {text-align: left; padding: 15px}
+        h3   {text-align: left; padding: 15px 3px 3px 15px; margin: 0px;}
         p    {color:#aaa}
         label {color:#FEF; padding-right: 5px;}
         form {float:right;}
 	</style>
-<title>Check the weather, Check it Now.</title>
+<title>{% block title %}Check the Weather, Check it Now. {% endblock %}</title>
 </head>
   <body>
   <nav>
       <h1>SimpleWeather</h1>
       <form action="/search" method="POST" name="search">
           <ul>
-            <li><label>Enter your Zip Code:</label><input type="text" name="zip" /></li>
+            <li><label>Zip Code:</label><input type="text" name="zip" /></li>
             <li><input type="submit" value="Search"></li>
           </ul>
       </form>
   </nav>
-    <h3>The Temp is: {{ temp }}</h3>
-<br>
-{% block content %}{% endblock %}
+  {% block content %}
+    <h2>Enter your Zip Code above</h2>
+  {% endblock %}
   </body>
 </html>

@@ -1,0 +1,7 @@
+{% extends "weather.html" %}
+{% block title %} Weather for {{ results["City Name"] }} {% endblock %}
+
+{% block content %}
+    <h3>The Temp is: {{ results["Current Temp"] }}</h3>
+    <h3>Weather Conditions:  {{ results["Weather"] }}</h3>
+{% endblock %}

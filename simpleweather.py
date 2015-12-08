@@ -12,12 +12,6 @@ import math
 
 app = Flask(__name__)
 
-
-#@app.route('/<int:zip>', methods=['GET','POST'])
-#baseurl = "http://api.openweathermap.org/data/2.5/weather?id=5128594&units=imperial&APPID=45dd9de404ef246619a921a6bc566818"
-#print (json.dumps(data, sort_keys=True, indent=4))
-
-
 def getHex(mainTemp):
     if str(mainTemp)[1] == 3:
         mainTemp = int(round(mainTemp,-1) / 5) *5
@@ -43,12 +37,16 @@ def search():
         baseurl = "http://api.openweathermap.org/data/2.5/weather?zip=" + zip + "&units=imperial&APPID=45dd9de404ef246619a921a6bc566818"
         result = urllib2.urlopen(baseurl).read()
         data = json.loads(result)
-        temp = data['main']['temp']
-        mainT = getHex(temp)
-        print (mainT)
-    return render_template('weather.html', temp=temp, mainTemp=mainT)
-
-
+        search_results = {
+                "City Name": data['name'],
+                "Weather" : str.title(data['weather'][0]['description']),
+                "Low" : data['main']['temp_min'],
+                "High" : data['main']['temp_max'],
+                "Current Temp" : data['main']['temp']
+                }
+        print (search_results["Weather"])
+        mainT = getHex(search_results["Current Temp"])
+    return render_template('search.html', mainTemp=mainT, results=search_results)
 if __name__ == '__main__':
-    app.debug = False
+    app.debug = True
     app.run()
