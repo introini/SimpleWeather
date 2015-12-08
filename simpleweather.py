@@ -48,5 +48,5 @@ def search():
         mainT = getHex(search_results["Current Temp"])
     return render_template('search.html', mainTemp=mainT, results=search_results)
 if __name__ == '__main__':
-    app.debug = True
+    app.debug = False
     app.run()
