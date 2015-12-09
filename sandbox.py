@@ -6,9 +6,9 @@ jsonPrint = json.dumps(data, sort_keys=True, indent=4)
 
 search_results = {
                 "City Name": data['name'],
-                "Weather" : data['weather'][0]['description'],
+                "Weather" : str(data['weather'][0]['description']).title(),
                 "Low" : data['main']['temp_min'],
                 "High" : data['main']['temp_max'],
                 "Current Temp" : data['main']['temp']
                 }
-print (search_results["City Name"])
+print (search_results["Weather"])

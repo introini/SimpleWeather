@@ -39,7 +39,7 @@ def search():
         data = json.loads(result)
         search_results = {
                 "City Name": data['name'],
-                "Weather" : str.title(data['weather'][0]['description']),
+                "Weather" : str(data['weather'][0]['description']).title(),
                 "Low" : data['main']['temp_min'],
                 "High" : data['main']['temp_max'],
                 "Current Temp" : data['main']['temp']
