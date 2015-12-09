@@ -1,7 +1,19 @@
 {% extends "weather.html" %}
 {% block title %} Weather for {{ results["City Name"] }} {% endblock %}
 
+{% block style %}
+    {{ super() }}
+        body {background-color: rgb({{ rgb["mainT"] }});}
+        h3.temp {background-color: rgb({{ rgb["mainT"] }});}
+        h3.hightemp {background-color: rgb({{ rgb["highT"] }});}
+        h3.lowtemp {background-color: rgb({{ rgb["lowT"] }});}
+        h3.weather {background-color: rgb(255,255,255);}
+{% endblock %}
+
 {% block content %}
-    <h3>The Temp is: {{ results["Current Temp"] }}</h3>
-    <h3>Weather Conditions:  {{ results["Weather"] }}</h3>
+    <h2>{{ results["City Name"] }}</h2>
+    <h3 class="hightemp">The High is: {{ results["High"] }}</h3>
+    <h3 class="lowtemp">The Low is: {{ results["Low"] }}</h3>
+    <h3 class="weather">Weather Conditions:  {{ results["Weather"] }}</h3>
+    <h3 class="temp">The Current Temp is: {{ results["Current Temp"] }}</h3>
 {% endblock %}

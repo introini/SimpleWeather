@@ -37,16 +37,23 @@ def search():
         baseurl = "http://api.openweathermap.org/data/2.5/weather?zip=" + zip + "&units=imperial&APPID=45dd9de404ef246619a921a6bc566818"
         result = urllib2.urlopen(baseurl).read()
         data = json.loads(result)
+
+        #Get State by ZIP
+        # >>>> http://maps.googleapis.com/maps/api/geocode/json?address=33325&sensor=true
+
         search_results = {
                 "City Name": data['name'],
                 "Weather" : str(data['weather'][0]['description']).title(),
                 "Low" : data['main']['temp_min'],
                 "High" : data['main']['temp_max'],
                 "Current Temp" : data['main']['temp']
-                }
-        print (search_results["Weather"])
-        mainT = getHex(search_results["Current Temp"])
-    return render_template('search.html', mainTemp=mainT, results=search_results)
+        }
+        rgb_values = {
+            "mainT" : getHex(search_results["Current Temp"]),
+            "highT" : getHex(search_results["High"]),
+            "lowT" : getHex(search_results["Low"])
+        }
+    return render_template('search.html', rgb=rgb_values, results=search_results)
 if __name__ == '__main__':
     app.debug = False
     app.run()
