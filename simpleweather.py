@@ -27,6 +27,16 @@ def getHex(mainTemp):
         b = str(colors[i]).split(',')[2]
     return colors[mainTemp]
 
+def getLocationData(zipCode):
+    ##Get Location info from Google
+    baseurl = "http://maps.googleapis.com/maps/api/geocode/json?address=" + str(zipCode)
+    response = urllib2.urlopen(baseurl).read()
+    data = json.loads(response)
+    location_data = data['results'][0]
+    lat = location_data['geometry']['location']['lat']
+    lng = location_data['geometry']['location']['lng']
+    return location_data, lat, lng
+
 @app.route('/')
 def simpleweather():
     return render_template('weather.html')
@@ -37,22 +47,17 @@ def search(api = api_key):
         ##Get Zip from user
         zip = request.form['zip']
 
-        ##Get Location info from Google
-        baseurl = "http://maps.googleapis.com/maps/api/geocode/json?address=" + str(zip)
-        response = urllib2.urlopen(baseurl).read()
-        data = json.loads(response)
-        location_data = data['results'][0]
-        lat = location_data['geometry']['location']['lat']
-        lng = location_data['geometry']['location']['lng']
+        ##Get Location Data
+        loc = getLocationData(zip)
 
         ##Get weather forecast from forecast.io
-        forecast = forecastio.load_forecast(api, lat , lng)
+        forecast = forecastio.load_forecast(api, loc[1], loc[2])
         current = forecast.currently()
         daily = forecast.daily().data[0]
 
         ##Collate Results
         search_results = {
-            "City Name": location_data['formatted_address'],
+            "City Name": loc[0]['formatted_address'],
             "Today's Weather" : daily.summary,
             "Low" : int(math.ceil(daily.apparentTemperatureMin)),
             "High" : int(math.ceil(daily.apparentTemperatureMax)),
