@@ -12,11 +12,27 @@
         div.weather {background-color: rgb(255,255,255);}
 {% endblock %}
 
+{% block style %}
+    {{ super() }}
+        body {background-color: rgb({{ rgb["mainT"] }});}
+        h3.temp {background-color: rgb({{ rgb["mainT"] }});}
+        h3.hightemp {background-color: rgb({{ rgb["highT"] }});}
+        h3.lowtemp {background-color: rgb({{ rgb["lowT"] }});}
+        h3.weather {background-color: rgb(255,255,255);}
+{% endblock %}
+
 {% block content %}
     <h2>{{ results["City Name"] }}</h2>
+<<<<<<< HEAD
     <div class="weather"><h3>Today's Weather Conditions:  </h3><h4>{{ results["Today's Weather"] }}</h4></div>
     <div class="hightemp"><h3>The High is: </h3><h4>{{ results["High"] }}°</h4></div>
     <div class="lowtemp"><h3>The Low is: </h3><h4>{{ results["Low"] }}°</h4></div>
     <div class="weather"><h3>Current Weather:  </h3><h4>{{ results["Current Weather"] }}</h4></div>
     <div class="temp"><h3>Current Temp is: </h3><h4>{{ results["Current Temp"] }}°</h4></div>
+=======
+    <h3 class="hightemp">The High is: {{ results["High"] }}</h3>
+    <h3 class="lowtemp">The Low is: {{ results["Low"] }}</h3>
+    <h3 class="weather">Weather Conditions:  {{ results["Weather"] }}</h3>
+    <h3 class="temp">The Current Temp is: {{ results["Current Temp"] }}</h3>
+>>>>>>> master
 {% endblock %}
