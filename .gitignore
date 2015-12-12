@@ -1,3 +1,9 @@
 /.gitignore
 /sandbox.py
-/.idea\*
+/.idea/.name
+/.idea/workspace.xml
+/.idea/vcs.xml
+/.idea/SimpleWeather.iml
+/.idea/modules.xml
+/.idea/misc.xml
+/.idea/encodings.xml

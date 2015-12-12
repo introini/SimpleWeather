@@ -1,7 +1,6 @@
 from flask import Flask
 from flask import render_template,request
 import urllib2, urllib, json
-<<<<<<< HEAD
 import math
 
 app = Flask(__name__)
@@ -55,7 +54,6 @@ if __name__ == '__main__':
     app.run()
 
 
-=======
 baseurl = "http://api.openweathermap.org/data/2.5/weather?zip=33323&units=imperial&APPID=45dd9de404ef246619a921a6bc566818"
 result = urllib2.urlopen(baseurl).read()
 data = json.loads(result)
@@ -69,4 +67,3 @@ search_results = {
                 "Current Temp" : data['main']['temp']
                 }
 print (jsonPrint)
->>>>>>> master
