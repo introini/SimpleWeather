@@ -46,7 +46,7 @@ def search(api = api_key):
     if request.method == 'POST':
         ##Get Zip from user
         zip = request.form['zip']
-<<<<<<< HEAD
+
 
         ##Get Location Data
         loc = getLocationData(zip)
@@ -64,21 +64,6 @@ def search(api = api_key):
             "High" : int(math.ceil(daily.apparentTemperatureMax)),
             "Current Weather" : current.summary,
             "Current Temp" : int(math.ceil(current.temperature))
-=======
-        baseurl = "http://api.openweathermap.org/data/2.5/weather?zip=" + zip + "&units=imperial&APPID=45dd9de404ef246619a921a6bc566818"
-        result = urllib2.urlopen(baseurl).read()
-        data = json.loads(result)
-
-        #Get State by ZIP
-        # >>>> http://maps.googleapis.com/maps/api/geocode/json?address=33325&sensor=true
-
-        search_results = {
-                "City Name": data['name'],
-                "Weather" : str(data['weather'][0]['description']).title(),
-                "Low" : data['main']['temp_min'],
-                "High" : data['main']['temp_max'],
-                "Current Temp" : data['main']['temp']
->>>>>>> master
         }
         rgb_values = {
             "mainT" : getHex(search_results["Current Temp"]),
