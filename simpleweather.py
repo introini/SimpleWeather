@@ -3,12 +3,13 @@ Created on Nov 18, 2015
 
 @author: mintroini
 '''
-
 from flask import Flask
 from flask import render_template,request
 import urllib2, urllib, json
+import forecastio
 import math
 
+api_key = "d35b97ae1e651cb4ff5e7fd7c608f29f"
 
 app = Flask(__name__)
 
@@ -26,14 +27,44 @@ def getHex(mainTemp):
         b = str(colors[i]).split(',')[2]
     return colors[mainTemp]
 
+def getLocationData(zipCode):
+    ##Get Location info from Google
+    baseurl = "http://maps.googleapis.com/maps/api/geocode/json?address=" + str(zipCode)
+    response = urllib2.urlopen(baseurl).read()
+    data = json.loads(response)
+    location_data = data['results'][0]
+    lat = location_data['geometry']['location']['lat']
+    lng = location_data['geometry']['location']['lng']
+    return location_data, lat, lng
+
 @app.route('/')
 def simpleweather():
     return render_template('weather.html')
 
 @app.route('/search', methods=['POST','GET'])
-def search():
+def search(api = api_key):
     if request.method == 'POST':
+        ##Get Zip from user
         zip = request.form['zip']
+<<<<<<< HEAD
+
+        ##Get Location Data
+        loc = getLocationData(zip)
+
+        ##Get weather forecast from forecast.io
+        forecast = forecastio.load_forecast(api, loc[1], loc[2])
+        current = forecast.currently()
+        daily = forecast.daily().data[0]
+
+        ##Collate Results
+        search_results = {
+            "City Name": loc[0]['formatted_address'],
+            "Today's Weather" : daily.summary,
+            "Low" : int(math.ceil(daily.apparentTemperatureMin)),
+            "High" : int(math.ceil(daily.apparentTemperatureMax)),
+            "Current Weather" : current.summary,
+            "Current Temp" : int(math.ceil(current.temperature))
+=======
         baseurl = "http://api.openweathermap.org/data/2.5/weather?zip=" + zip + "&units=imperial&APPID=45dd9de404ef246619a921a6bc566818"
         result = urllib2.urlopen(baseurl).read()
         data = json.loads(result)
@@ -47,6 +78,7 @@ def search():
                 "Low" : data['main']['temp_min'],
                 "High" : data['main']['temp_max'],
                 "Current Temp" : data['main']['temp']
+>>>>>>> master
         }
         rgb_values = {
             "mainT" : getHex(search_results["Current Temp"]),
