@@ -56,7 +56,10 @@ def getWeatherData(api, loc, sc):
             "High Temp RGB" : getHex(int(math.ceil(daily.apparentTemperatureMax))),
             "Low Temp RGB" : getHex(int(math.ceil(daily.apparentTemperatureMin)))
         }
-
+        sc = search_results
+        print(sc)
+        return sc
+'''
         print(len(sc))
         if len(sc) < 3:
             sc.append(search_results)
@@ -65,7 +68,7 @@ def getWeatherData(api, loc, sc):
             sc.popleft()
             sc.append(search_results)
             return sc
-
+'''
 
 @app.route('/')
 def simpleweather():
