@@ -1,22 +1,27 @@
 {% extends "weather.html" %}
-{% block title %} {{ results["Current Temp"] }}° - {{ results["City Name"] }} {% endblock %}
+{% block title %} {{ (results | last)["Current Temp"] }}° - {{ (results | last)["City Name"] }} {% endblock %}
 
 {% block style %}
     {{ super() }}
-        body {background-color: rgb({{ rgb["mainT"] }});}
+        /*body {background-color: rgb({{ results["Current Temp RGB"] }});} */
         h2 {background-color: #676767; color: #FEF; font-size: 12pt;}
         div {text-align: left; padding: 10px; margin: 0px; box-shadow: 0px -10px 10px -11px #0C0C0C;}
-        div.temp {background-color: rgb({{ rgb["mainT"] }});}
-        div.hightemp {background-color: rgb({{ rgb["highT"] }});}
-        div.lowtemp {background-color: rgb({{ rgb["lowT"] }});}
         div.weather {background-color: rgb(255,255,255);}
+        div {text-align: left; padding: 0px; margin: 0px; box-shadow: 0px -10px 10px -11px #0C0C0C;}
+        div.item {float:left; width: 33.3%}
 {% endblock %}
 
 {% block content %}
-    <h2>{{ results["City Name"] }}</h2>
-    <div class="weather"><h3>Today's Weather Conditions:  </h3><h4>{{ results["Today's Weather"] }}</h4></div>
-    <div class="hightemp"><h3>The High is: </h3><h4>{{ results["High"] }}°</h4></div>
-    <div class="lowtemp"><h3>The Low is: </h3><h4>{{ results["Low"] }}°</h4></div>
-    <div class="weather"><h3>Current Weather:  </h3><h4>{{ results["Current Weather"] }}</h4></div>
-    <div class="temp"><h3>Current Temp is: </h3><h4>{{ results["Current Temp"] }}°</h4></div>
+<section style="width: 100%;">
+{% for item in results %}
+<div class="item">
+    <h2>{{ item["City Name"] }}</h2>
+    <div class="weather" style="padding: 10px;"><h3>Today's Weather Conditions:  </h3><h4>{{ item["Today's Weather"] }}</h4></div>
+    <div class="hightemp" style="background-color: rgb({{ item["High Temp RGB"] }}); padding: 10px;"><h3>The High is: </h3><h4>{{ item["High"] }}°</h4></div>
+    <div class="lowtemp" style="background-color: rgb({{ item["Low Temp RGB"] }});padding: 10px;"><h3>The Low is: </h3><h4>{{ item["Low"] }}°</h4></div>
+    <div class="weather" style="padding: 10px;"><h3>Current Weather:  </h3><h4>{{ item["Current Weather"] }}</h4></div>
+    <div class="temp" style="background-color: rgb({{ item["Current Temp RGB"] }});padding: 10px; height: 100%"><h3>Current Temp is: </h3><h4>{{ item["Current Temp"] }}°</h4></div>
+</div>
+{% endfor %}
+</section>
 {% endblock %}

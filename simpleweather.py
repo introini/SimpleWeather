@@ -8,11 +8,12 @@ from flask import render_template,request
 import urllib2, urllib, json
 import forecastio
 import math
+from collections import deque
 
 api_key = "d35b97ae1e651cb4ff5e7fd7c608f29f"
-
 app = Flask(__name__)
-
+search_collection = []
+search_collection = deque(search_collection)
 def getHex(mainTemp):
     if str(mainTemp)[1] == 3:
         mainTemp = int(round(mainTemp,-1) / 5) *5
@@ -29,7 +30,7 @@ def getHex(mainTemp):
 
 def getLocationData(zipCode):
     ##Get Location info from Google
-    baseurl = "http://maps.googleapis.com/maps/api/geocode/json?address=" + str(zipCode)
+    baseurl = "https://maps.googleapis.com/maps/api/geocode/json?address=" + str(urllib2.quote(zipCode, safe='/'))
     response = urllib2.urlopen(baseurl).read()
     data = json.loads(response)
     location_data = data['results'][0]
@@ -37,21 +38,8 @@ def getLocationData(zipCode):
     lng = location_data['geometry']['location']['lng']
     return location_data, lat, lng
 
-@app.route('/')
-def simpleweather():
-    return render_template('weather.html')
-
-@app.route('/search', methods=['POST','GET'])
-def search(api = api_key):
-    if request.method == 'POST':
-        ##Get Zip from user
-        zip = request.form['zip']
-
-
-        ##Get Location Data
-        loc = getLocationData(zip)
-
-        ##Get weather forecast from forecast.io
+def getWeatherData(api, loc, sc):
+      ##Get weather forecast from forecast.io
         forecast = forecastio.load_forecast(api, loc[1], loc[2])
         current = forecast.currently()
         daily = forecast.daily().data[0]
@@ -63,14 +51,41 @@ def search(api = api_key):
             "Low" : int(math.ceil(daily.apparentTemperatureMin)),
             "High" : int(math.ceil(daily.apparentTemperatureMax)),
             "Current Weather" : current.summary,
-            "Current Temp" : int(math.ceil(current.temperature))
+            "Current Temp" : int(math.ceil(current.temperature)),
+            "Current Temp RGB" : getHex(int(math.ceil(current.temperature))),
+            "High Temp RGB" : getHex(int(math.ceil(daily.apparentTemperatureMax))),
+            "Low Temp RGB" : getHex(int(math.ceil(daily.apparentTemperatureMin)))
         }
-        rgb_values = {
-            "mainT" : getHex(search_results["Current Temp"]),
-            "highT" : getHex(search_results["High"]),
-            "lowT" : getHex(search_results["Low"])
-        }
-    return render_template('search.html', rgb=rgb_values, results=search_results)
+
+        print(len(sc))
+        if len(sc) < 3:
+            sc.append(search_results)
+            return sc
+        elif len(sc) < 4:
+            sc.popleft()
+            sc.append(search_results)
+            return sc
+
+
+@app.route('/')
+def simpleweather():
+    return render_template('weather.html')
+
+@app.route('/search', methods=['POST','GET'])
+def search(api = api_key):
+    if request.method == 'POST':
+
+        ##Get Zip from user
+        zip = request.form['zip']
+
+        ##Get Location Data
+        location = getLocationData(zip)
+
+        ##Get Weather Data
+        weather = getWeatherData(api_key, location, search_collection)
+
+    return render_template('search.html', results=weather)
+
 if __name__ == '__main__':
-    app.debug = False
+    app.debug = True
     app.run()
