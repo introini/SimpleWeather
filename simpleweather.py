@@ -8,24 +8,9 @@ from flask import render_template,request
 import urllib2, urllib, json
 import forecastio
 import math
-import psycopg2
-import urlparse
 
-
-url = urlparse.urlparse("postgres://dhmwzmprkdkskg:iOwZtBFJop3CULXtyJf3CCN0sN@ec2-54-204-35-207.compute-1.amazonaws.com:5432/dak67ocsf369hg")
-
-conn = psycopg2.connect(
-    database=url.path[1:],
-    user=url.username,
-    password=url.password,
-    host=url.hostname,
-    port=url.port
-)
-conn.close()
 api_key = "d35b97ae1e651cb4ff5e7fd7c608f29f"
 app = Flask(__name__)
-searchId = 0
-
 
 def getHex(mainTemp):
     if str(mainTemp)[1] == 3:
@@ -51,7 +36,7 @@ def getLocationData(zipCode):
     lng = location_data['geometry']['location']['lng']
     return location_data, lat, lng
 
-def getWeatherData(api, loc, id):
+def getWeatherData(api, loc):
 
       ##Get weather forecast from forecast.io
         forecast = forecastio.load_forecast(api, loc[1], loc[2])
@@ -60,7 +45,6 @@ def getWeatherData(api, loc, id):
 
         ##Collate Results
         search_results = {
-            "id": id,
             "CityName": loc[0]['formatted_address'],
             "TodaysWeather" : daily.summary,
             "Low" : int(math.ceil(daily.apparentTemperatureMin)),
@@ -81,11 +65,6 @@ def simpleweather():
 @app.route('/search', methods=['POST','GET'])
 def search(api = api_key):
     if request.method == 'POST':
-        global searchId
-        if searchId == 0:
-            searchId = 1
-        else:
-            searchId += 1
         ##Get Zip from user
         zip = request.form['zip']
 
@@ -93,7 +72,7 @@ def search(api = api_key):
         location = getLocationData(zip)
 
         ##Get Weather Data
-        weather = getWeatherData(api_key, location, searchId)
+        weather = getWeatherData(api_key, location)
 
     return render_template('search.html', results=weather)
 
