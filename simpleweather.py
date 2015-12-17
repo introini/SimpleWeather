@@ -21,7 +21,7 @@ conn = psycopg2.connect(
     host=url.hostname,
     port=url.port
 )
-
+conn.close()
 api_key = "d35b97ae1e651cb4ff5e7fd7c608f29f"
 app = Flask(__name__)
 searchId = 0

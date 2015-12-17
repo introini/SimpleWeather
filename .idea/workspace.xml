@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e085fc49-9715-441a-9bb9-17ee35202312" name="Default" comment="Fixed App">
+    <list default="true" id="e085fc49-9715-441a-9bb9-17ee35202312" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simpleweather.py" afterPath="$PROJECT_DIR$/simpleweather.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/search.html" afterPath="$PROJECT_DIR$/templates/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/weather.html" afterPath="$PROJECT_DIR$/templates/weather.html" />
     </list>
     <ignored path="SimpleWeather.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -419,7 +416,13 @@
       <option name="project" value="LOCAL" />
       <updated>1450306307658</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fixed App">
+      <created>1450370166368</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1450370166368</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
