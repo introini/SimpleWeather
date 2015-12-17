@@ -77,5 +77,5 @@ def search(api = api_key):
     return render_template('search.html', results=weather)
 
 if __name__ == '__main__':
-    app.debug = True
+    app.debug = False
     app.run()

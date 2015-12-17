@@ -36,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="simpleweather.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="simpleweather.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/simpleweather.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="26" selection-start-line="46" selection-start-column="26" selection-end-line="46" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.75061125">
+              <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
               <folding>
                 <element signature="e#52#75#0" expanded="true" />
               </folding>
@@ -68,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="weather.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="weather.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/weather.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.3550914">
-              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+            <state vertical-scroll-proportion="-5.576923">
+              <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -106,8 +106,8 @@
         <option value="$PROJECT_DIR$/connect.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/templates/weather.html" />
-        <option value="$PROJECT_DIR$/simpleweather.py" />
         <option value="$PROJECT_DIR$/templates/search.html" />
+        <option value="$PROJECT_DIR$/simpleweather.py" />
       </list>
     </option>
   </component>
@@ -430,7 +430,13 @@
       <option name="project" value="LOCAL" />
       <updated>1450370345896</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Fixed App">
+      <created>1450380777146</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1450380777147</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -566,16 +572,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/simpleweather.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="26" selection-start-line="46" selection-start-column="26" selection-end-line="46" selection-end-column="26" />
-          <folding>
-            <element signature="e#52#75#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/search.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.8461537">
@@ -586,9 +582,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/weather.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.3550914">
-          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        <state vertical-scroll-proportion="-5.576923">
+          <caret line="33" column="20" selection-start-line="33" selection-start-column="20" selection-end-line="33" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/simpleweather.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.75061125">
+          <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
+          <folding>
+            <element signature="e#52#75#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
