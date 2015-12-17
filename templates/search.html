@@ -1,26 +1,36 @@
 {% extends "weather.html" %}
-{% block title %} {{ results["Current Temp"] }}° - {{ results["City Name"] }} {% endblock %}
+{% block title %} {{ results["CurrentTemp"] }}° - {{ results["CityName"] }} {% endblock %}
 
 {% block style %}
     {{ super() }}
-        body {background-color: rgb({{ results["Current Temp RGB"] }});}
+        body {background-color: rgb({{ results["CurrentTempRGB"] }});}
         h2 {background-color: #676767; color: #FEF; font-size: 12pt;}
         div.weather {background-color: rgb(255,255,255);}
         div {text-align: left; padding: 10px; margin: 0px; box-shadow: 0px -10px 10px -11px #0C0C0C;}
-        div.hightemp {background-color: rgb({{ results["High Temp RGB"] }})}
-        div.lowtemp {background-color: rgb({{ results["Low Temp RGB"] }})}
-        div.temp {background-color: rgb({{ results["Current Temp RGB"] }})}
+        div.hightemp {background-color: rgb({{ results["HighTempRGB"] }})}
+        div.lowtemp {background-color: rgb({{ results["LowTempRGB"] }})}
+        div.temp {background-color: rgb({{ results["CurrentTempRGB"] }})}
         div.search {padding: -10px;}
 {% endblock %}
 
-{% block content %}
-<section>
-    <h2>{{ results["City Name"] }}</h2>
-    <div class="weather"><h3>Today's Weather Conditions:  </h3><h4>{{ results["Today's Weather"] }}</h4></div>
+ {% block nav %}
+  <nav>
+      <h1>SimpleWeather</h1>
+  </nav>
+  {% endblock %}
+  {% block content %}
+  <section>
+  {% block form%}
+      <section class="form">
+          {{ super() }}
+      </section>
+      {% endblock %}
+    <h2>{{ results["CityName"] }} - {{ results["id"] }}</h2>
+    <div class="weather"><h3>Today's Weather Conditions:  </h3><h4>{{ results["TodaysWeather"] }}</h4></div>
     <div class="hightemp"><h3>The High is: </h3><h4>{{ results["High"] }}°</h4></div>
     <div class="lowtemp"><h3>The Low is: </h3><h4>{{ results["Low"] }}°</h4></div>
-    <div class="weather"><h3>Current Weather:  </h3><h4>{{ results["Current Weather"] }}</h4></div>
-    <div class="temp"><h3>Current Temp is: </h3><h4>{{ results["Current Temp"] }}°</h4></div>
+    <div class="weather"><h3>Current Weather:  </h3><h4>{{ results["CurrentWeather"] }}</h4></div>
+    <div class="temp"><h3>Current Temp is: </h3><h4>{{ results["CurrentTemp"] }}°</h4></div>
 </section>
 
 {% endblock %}

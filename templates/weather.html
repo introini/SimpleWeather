@@ -13,23 +13,30 @@
             h3   {text-align: left; padding: 0px; margin: 0px; display: inline;}
             h4   {text-align: left; padding: 0px; margin: 0px; display: inline; font-weight: lighter;}
             label {color:#FEF; padding-right: 5px;}
-            form {float:right;}
+            .form {background-color: #FEFEFE;}
+            form ul li {list-style-type: none; line-height: 2em; padding: 0.5em 0.5em;}
         {% endblock %}
 	</style>
 <title>{% block title %}Check the Weather, Check it Now. {% endblock %}</title>
 </head>
   <body>
+  {% block nav %}
   <nav>
       <h1>SimpleWeather</h1>
-      <form action="/search" method="POST" name="search">
-          <ul>
-            <li><label>Search by City or Zip</label><input type="text" name="zip" /></li>
-            <li><input type="submit" value="Search"></li>
-          </ul>
-      </form>
   </nav>
+  {% endblock %}
   {% block content %}
+  <section class="form">
+  {% block form%}
     <h2>Check the weather, Check it now.</h2>
+    <form action="/search" method="POST" name="search">
+        <ul>
+            <li><input type="text" name="zip" placeholder="City / Zip"/></li>
+            <li><input type="submit" value="Search"></li>
+        </ul>
+    </form>
+  {% endblock %}
+  </section>
   {% endblock %}
   </body>
 </html>

@@ -8,12 +8,25 @@ from flask import render_template,request
 import urllib2, urllib, json
 import forecastio
 import math
-from collections import deque
+import psycopg2
+import urlparse
+
+
+url = urlparse.urlparse("postgres://dhmwzmprkdkskg:iOwZtBFJop3CULXtyJf3CCN0sN@ec2-54-204-35-207.compute-1.amazonaws.com:5432/dak67ocsf369hg")
+
+conn = psycopg2.connect(
+    database=url.path[1:],
+    user=url.username,
+    password=url.password,
+    host=url.hostname,
+    port=url.port
+)
 
 api_key = "d35b97ae1e651cb4ff5e7fd7c608f29f"
 app = Flask(__name__)
-search_collection = []
-search_collection = deque(search_collection)
+searchId = 0
+
+
 def getHex(mainTemp):
     if str(mainTemp)[1] == 3:
         mainTemp = int(round(mainTemp,-1) / 5) *5
@@ -38,7 +51,8 @@ def getLocationData(zipCode):
     lng = location_data['geometry']['location']['lng']
     return location_data, lat, lng
 
-def getWeatherData(api, loc, sc):
+def getWeatherData(api, loc, id):
+
       ##Get weather forecast from forecast.io
         forecast = forecastio.load_forecast(api, loc[1], loc[2])
         current = forecast.currently()
@@ -46,29 +60,19 @@ def getWeatherData(api, loc, sc):
 
         ##Collate Results
         search_results = {
-            "City Name": loc[0]['formatted_address'],
-            "Today's Weather" : daily.summary,
+            "id": id,
+            "CityName": loc[0]['formatted_address'],
+            "TodaysWeather" : daily.summary,
             "Low" : int(math.ceil(daily.apparentTemperatureMin)),
             "High" : int(math.ceil(daily.apparentTemperatureMax)),
-            "Current Weather" : current.summary,
-            "Current Temp" : int(math.ceil(current.temperature)),
-            "Current Temp RGB" : getHex(int(math.ceil(current.temperature))),
-            "High Temp RGB" : getHex(int(math.ceil(daily.apparentTemperatureMax))),
-            "Low Temp RGB" : getHex(int(math.ceil(daily.apparentTemperatureMin)))
+            "CurrentWeather" : current.summary,
+            "CurrentTemp" : int(math.ceil(current.temperature)),
+            "CurrentTempRGB" : getHex(int(math.ceil(current.temperature))),
+            "HighTempRGB" : getHex(int(math.ceil(daily.apparentTemperatureMax))),
+            "LowTempRGB" : getHex(int(math.ceil(daily.apparentTemperatureMin)))
         }
-        sc = search_results
-        print(sc)
-        return sc
-'''
-        print(len(sc))
-        if len(sc) < 3:
-            sc.append(search_results)
-            return sc
-        elif len(sc) < 4:
-            sc.popleft()
-            sc.append(search_results)
-            return sc
-'''
+
+        return search_results
 
 @app.route('/')
 def simpleweather():
@@ -77,7 +81,11 @@ def simpleweather():
 @app.route('/search', methods=['POST','GET'])
 def search(api = api_key):
     if request.method == 'POST':
-
+        global searchId
+        if searchId == 0:
+            searchId = 1
+        else:
+            searchId += 1
         ##Get Zip from user
         zip = request.form['zip']
 
@@ -85,7 +93,7 @@ def search(api = api_key):
         location = getLocationData(zip)
 
         ##Get Weather Data
-        weather = getWeatherData(api_key, location, search_collection)
+        weather = getWeatherData(api_key, location, searchId)
 
     return render_template('search.html', results=weather)
 
